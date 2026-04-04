@@ -45,12 +45,10 @@ const PHRASES: Seg[][] = [
   ],
 ];
 
-// Retorna o texto plano de uma frase (sem marcação)
 function toPlain(phrase: Seg[]) {
   return phrase.map((s) => s.text).join('');
 }
 
-// Renderiza os segmentos visíveis dado o número de chars digitados
 function renderSegments(phrase: Seg[], charCount: number) {
   const nodes: React.ReactNode[] = [];
   let remaining = charCount;
@@ -68,7 +66,7 @@ function renderSegments(phrase: Seg[], charCount: number) {
         </strong>
       ) : (
         <span key={i}>{visible}</span>
-      )
+      ),
     );
   }
 
@@ -88,9 +86,9 @@ function useTypewriter(phrases: Seg[][], mounted: boolean) {
     const isComplete = charCount === fullText.length;
     const isEmpty = charCount === 0;
 
-    const typingSpeed     = 38;
-    const deletingSpeed   = 22;
-    const pauseAfterType  = 2200;
+    const typingSpeed = 38;
+    const deletingSpeed = 22;
+    const pauseAfterType = 2200;
     const pauseAfterDelete = 400;
 
     if (!isDeleting && isComplete) {
@@ -142,6 +140,7 @@ function TypewriterText({ mounted }: { mounted: boolean }) {
       >
         {nodes}
         <span
+          aria-hidden="true"
           style={{
             display: 'inline-block',
             width: '2px',
@@ -162,6 +161,7 @@ export function Hero({ mounted }: HeroProps) {
   return (
     <section
       id="top"
+      aria-label="Apresentação"
       style={{
         minHeight: '100vh',
         display: 'flex',
@@ -173,8 +173,9 @@ export function Hero({ mounted }: HeroProps) {
         padding: '120px 24px 80px',
       }}
     >
-      {/* Decorative elements */}
+      {/* Elementos decorativos */}
       <div
+        aria-hidden="true"
         style={{
           position: 'absolute',
           top: '15%',
@@ -185,10 +186,11 @@ export function Hero({ mounted }: HeroProps) {
           borderRadius: '50%',
           animation: 'float-slow 8s ease-in-out infinite',
           opacity: mounted ? 0.4 : 0,
-          transition: 'opacity 2s ease,border-color .8s ease',
+          transition: 'opacity 2s ease, border-color .8s ease',
         }}
       />
       <div
+        aria-hidden="true"
         style={{
           position: 'absolute',
           bottom: '20%',
@@ -199,12 +201,12 @@ export function Hero({ mounted }: HeroProps) {
           transform: 'rotate(45deg)',
           animation: 'float-slow 6s ease-in-out infinite 1s',
           opacity: mounted ? 0.3 : 0,
-          transition: 'opacity 2s ease .5s,border-color .8s ease',
+          transition: 'opacity 2s ease .5s, border-color .8s ease',
         }}
       />
 
-      {/* Grid de fundo sutil */}
-      <div className="bg-grid" />
+      {/* Grid de fundo */}
+      <div className="bg-grid" aria-hidden="true" />
 
       <div style={{ textAlign: 'center', maxWidth: 1000 }}>
         <div
@@ -257,13 +259,14 @@ export function Hero({ mounted }: HeroProps) {
             Ver Projetos
           </a>
           <a href="#contato" className="btn-secondary">
-            Contato
+            Entrar em Contato
           </a>
         </div>
       </div>
 
       {/* Scroll indicator */}
       <div
+        aria-hidden="true"
         style={{
           position: 'absolute',
           bottom: 40,
@@ -297,17 +300,6 @@ export function Hero({ mounted }: HeroProps) {
           }}
         />
       </div>
-
-      <style>{`
-        @keyframes cursor-blink {
-          0%, 100% { opacity: 1; }
-          50%       { opacity: 0; }
-        }
-        @media (max-width: 768px) {
-          .hero-title { font-size: 13vw !important; }
-          .hero-sub { font-size: 4.5vw !important; }
-        }
-      `}</style>
     </section>
   );
 }

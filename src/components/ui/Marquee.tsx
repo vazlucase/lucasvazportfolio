@@ -1,15 +1,18 @@
 import { RevealText } from '../common/RevealText';
 
-export function Marquee() {
-  const isDark = typeof window !== 'undefined' 
-    ? document.documentElement.getAttribute('data-theme') === 'dark'
-    : true;
-  
+interface MarqueeProps {
+  isDark: boolean;
+}
+
+export function Marquee({ isDark }: MarqueeProps) {
   const marqueeColor = isDark ? 'rgba(235,235,235,0.3)' : 'rgba(28,28,28,0.25)';
 
   return (
     <RevealText>
-      <div style={{ overflow: 'hidden', padding: '60px 0', position: 'relative', zIndex: 2 }}>
+      <div
+        aria-hidden="true"
+        style={{ overflow: 'hidden', padding: '60px 0', position: 'relative', zIndex: 2 }}
+      >
         <div
           style={{
             display: 'flex',
@@ -20,11 +23,12 @@ export function Marquee() {
             fontWeight: 800,
             color: marqueeColor,
             letterSpacing: '-0.02em',
+            transition: 'color 0.4s ease',
           }}
         >
-          {Array(3).fill(null).map((_, i) => (
+          {Array.from({ length: 3 }, (_, i) => (
             <span key={i}>
-              ◐&nbsp; FRONTEND &nbsp;◐&nbsp; DESIGN &nbsp;◑&nbsp; BACKEND &nbsp;◓&nbsp; WEB &nbsp;◐&nbsp; FRONTEND &nbsp;◐&nbsp; DESIGN &nbsp;◑&nbsp; BACKEND &nbsp;◓&nbsp; WEB &nbsp;◐&nbsp;◐&nbsp; FRONTEND &nbsp;◐&nbsp; DESIGN &nbsp;◑&nbsp; BACKEND &nbsp;◓&nbsp; WEB &nbsp;◐&nbsp;
+              ◐&nbsp; FRONTEND &nbsp;◐&nbsp; DESIGN &nbsp;◑&nbsp; BACKEND &nbsp;◓&nbsp; WEB &nbsp;◐&nbsp; FRONTEND &nbsp;◐&nbsp; DESIGN &nbsp;◑&nbsp; BACKEND &nbsp;◓&nbsp; WEB &nbsp;
             </span>
           ))}
         </div>

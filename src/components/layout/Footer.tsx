@@ -1,3 +1,5 @@
+import { socialLinks } from '../../data/social';
+
 export function Footer() {
   return (
     <footer
@@ -11,6 +13,7 @@ export function Footer() {
       }}
     >
       <div
+        className="footer-inner"
         style={{
           maxWidth: 1100,
           margin: '0 auto',
@@ -24,7 +27,7 @@ export function Footer() {
         <div>
           <div
             style={{
-              fontFamily: "'Space Mono', monospace",
+              fontFamily: 'var(--font-mono)',
               fontSize: 14,
               fontWeight: 700,
               letterSpacing: 3,
@@ -36,7 +39,7 @@ export function Footer() {
           </div>
           <div
             style={{
-              fontFamily: "'Space Mono', monospace",
+              fontFamily: 'var(--font-mono)',
               fontSize: 11,
               color: 'var(--fg-muted)',
               letterSpacing: 1,
@@ -46,84 +49,25 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Centro - perfeitamente centralizado */}
+        {/* Centro — usa socialLinks data (DRY) */}
         <div style={{ textAlign: 'center' }}>
+          <nav aria-label="Redes sociais" style={{ display: 'flex', gap: 24, justifyContent: 'center', alignItems: 'center', marginBottom: 12 }}>
+            {socialLinks.map((social) => (
+              <a
+                key={social.name}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-link"
+                aria-label={`Visitar perfil no ${social.name}`}
+              >
+                {social.name}
+              </a>
+            ))}
+          </nav>
           <div
             style={{
-              display: 'flex',
-              gap: 24,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: 12,
-            }}
-          >
-            <a
-              href="https://github.com/vazlucase"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: 'var(--fg-muted)',
-                textDecoration: 'none',
-                fontSize: 12,
-                fontFamily: "'Space Mono', monospace",
-                letterSpacing: 1,
-                transition: 'color 0.3s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = 'var(--fg)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'var(--fg-muted)';
-              }}
-            >
-              GitHub
-            </a>
-            <a
-              href="https://www.instagram.com/vazlk_/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: 'var(--fg-muted)',
-                textDecoration: 'none',
-                fontSize: 12,
-                fontFamily: "'Space Mono', monospace",
-                letterSpacing: 1,
-                transition: 'color 0.3s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = 'var(--fg)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'var(--fg-muted)';
-              }}
-            >
-              Instagram
-            </a>
-            <a
-              href="https://www.linkedin.com/in/lucasvaz"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: 'var(--fg-muted)',
-                textDecoration: 'none',
-                fontSize: 12,
-                fontFamily: "'Space Mono', monospace",
-                letterSpacing: 1,
-                transition: 'color 0.3s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = 'var(--fg)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'var(--fg-muted)';
-              }}
-            >
-              LinkedIn
-            </a>
-          </div>
-          <div
-            style={{
-              fontFamily: "'Space Mono', monospace",
+              fontFamily: 'var(--font-mono)',
               fontSize: 10,
               color: 'var(--fg-muted)',
               letterSpacing: 2,
@@ -138,18 +82,18 @@ export function Footer() {
         <div style={{ textAlign: 'right' }}>
           <div
             style={{
-              fontFamily: "'Space Mono', monospace",
+              fontFamily: 'var(--font-mono)',
               fontSize: 11,
               color: 'var(--fg-muted)',
               letterSpacing: 1,
               marginBottom: 4,
             }}
           >
-            © 2026
+            © {new Date().getFullYear()}
           </div>
           <div
             style={{
-              fontFamily: "'Space Mono', monospace",
+              fontFamily: 'var(--font-mono)',
               fontSize: 10,
               color: 'var(--fg-muted)',
               letterSpacing: 2,
@@ -160,22 +104,6 @@ export function Footer() {
           </div>
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 768px) {
-          footer > div {
-            grid-template-columns: 1fr !important;
-            gap: 32px !important;
-            text-align: center !important;
-          }
-          footer > div > div {
-            text-align: center !important;
-          }
-          footer > div > div:last-child {
-            text-align: center !important;
-          }
-        }
-      `}</style>
     </footer>
   );
 }

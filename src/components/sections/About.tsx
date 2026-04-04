@@ -91,13 +91,13 @@ export function About({ isDark }: AboutProps) {
                   border: '1px solid var(--card-border)',
                   borderRadius: 20,
                   padding: 36,
-                  transition: 'background 0.8s ease,border-color 0.8s ease',
-                  ...(!isDark ? { boxShadow: 'rgba(0, 0, 0, 0.04) 0px 4px 12px' } : {}),
+                  transition: 'background 0.8s ease, border-color 0.8s ease',
+                  ...(!isDark ? { boxShadow: 'var(--shadow-sm)' } : {}),
                 }}
               >
                 {aboutInfo.map((item, i) => (
                   <div
-                    key={i}
+                    key={item.label}
                     style={{
                       display: 'flex',
                       justifyContent: 'space-between',
@@ -127,7 +127,9 @@ export function About({ isDark }: AboutProps) {
                         color: 'var(--fg)',
                       }}
                     >
-                      {item.hasStatus && <span className="status-dot" />}
+                      {item.hasStatus && (
+                        <span className="status-dot" aria-label="Disponível para trabalho" role="status" />
+                      )}
                       {item.value}
                     </span>
                   </div>
@@ -148,7 +150,7 @@ export function About({ isDark }: AboutProps) {
                       borderRadius: 'var(--radius-full)',
                       border: '1px solid var(--card-border)',
                       color: 'var(--fg-muted)',
-                      transition: 'border-color 0.8s ease,color 0.8s ease',
+                      transition: 'border-color 0.8s ease, color 0.8s ease',
                       background: !isDark ? 'rgba(0,0,0,0.02)' : 'transparent',
                     }}
                   >
@@ -160,15 +162,6 @@ export function About({ isDark }: AboutProps) {
           </div>
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .about-grid {
-            grid-template-columns: 1fr !important;
-            gap: 40px !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }

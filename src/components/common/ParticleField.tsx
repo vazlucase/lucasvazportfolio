@@ -4,15 +4,22 @@ interface ParticleFieldProps {
   isDark: boolean;
 }
 
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  r: number;
+  o: number;
+}
+
 export function ParticleField({ isDark }: ParticleFieldProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>();
-  const particlesRef = useRef<Array<{
-    x: number; y: number; vx: number; vy: number; r: number; o: number;
-  }>>([]);
+  const animationRef = useRef<number>(0);
+  const particlesRef = useRef<Particle[]>([]);
 
   useEffect(() => {
-    // Respeita prefers-reduced-motion
+    /* Respeita prefers-reduced-motion */
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) return;
 
@@ -43,7 +50,8 @@ export function ParticleField({ isDark }: ParticleFieldProps) {
       const ps = particlesRef.current;
       const br = isDark ? 200 : 80;
 
-      ps.forEach((p, i) => {
+      for (let i = 0; i < ps.length; i++) {
+        const p = ps[i];
         p.x += p.vx;
         p.y += p.vy;
         if (p.x < 0) p.x = canvas.width;
@@ -69,12 +77,12 @@ export function ParticleField({ isDark }: ParticleFieldProps) {
             ctx.stroke();
           }
         }
-      });
+      }
 
       animationRef.current = requestAnimationFrame(draw);
     };
 
-    // Pausa quando a aba fica oculta — economiza CPU/bateria
+    /* Pausa quando a aba fica oculta — economiza CPU */
     const handleVisibility = () => {
       if (document.hidden) {
         if (animationRef.current) cancelAnimationFrame(animationRef.current);

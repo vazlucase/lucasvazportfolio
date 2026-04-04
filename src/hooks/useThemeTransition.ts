@@ -8,28 +8,22 @@ interface ColorValues {
   cardBg: string;
   cardBorder: string;
   cardHover: string;
-  buttonPrimaryBg: string;
-  buttonPrimaryColor: string;
-  buttonSecondaryColor: string;
-  buttonSecondaryBorder: string;
   divider: string;
 }
 
 export function useThemeTransition(
   darkTheme: ColorValues,
   lightTheme: ColorValues,
-  duration: number = 400
+  duration: number = 400,
+  initialDark: boolean = true,
 ) {
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(initialDark);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const toggleTheme = useCallback(() => {
     setIsTransitioning(true);
-    
-    // Muda o tema imediatamente, mas a transição CSS cuida da animação
-    setIsDark(prev => !prev);
-    
-    // Remove o estado de transição após a duração
+    setIsDark((prev) => !prev);
+
     setTimeout(() => {
       setIsTransitioning(false);
     }, duration);

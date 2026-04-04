@@ -33,9 +33,7 @@ export function Skills() {
             }}
           >
             Ferramentas que transformam{' '}
-            <span style={{ fontWeight: 200, fontStyle: 'italic', color: 'var(--fg)' }}>
-              visão em realidade
-            </span>
+            <span className="italic-highlight">visão em realidade</span>
           </h2>
         </RevealText>
 
@@ -48,21 +46,9 @@ export function Skills() {
           }}
         >
           {skillsData.map((skill, i) => (
-            <RevealText key={i} delay={0.15 + i * 0.1}>
-              <div
-                className="skill-card"
-                style={{
-                  background: 'var(--card-bg)',
-                  border: `1px solid var(--card-border)`,
-                  borderRadius: '20px',
-                  padding: '32px',
-                  transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                  cursor: 'default',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
-              >
-                <div style={{ fontSize: 48, marginBottom: 20, opacity: 0.7, color: 'var(--fg)' }}>
+            <RevealText key={skill.title} delay={0.15 + i * 0.1}>
+              <div className="skill-card">
+                <div style={{ fontSize: 48, marginBottom: 20, opacity: 0.7, color: 'var(--fg)' }} aria-hidden="true">
                   {skill.icon}
                 </div>
                 <h3
@@ -71,19 +57,11 @@ export function Skills() {
                     fontWeight: 600,
                     marginBottom: 12,
                     letterSpacing: '-0.02em',
-                    color: 'var(--fg)',
                   }}
                 >
                   {skill.title}
                 </h3>
-                <p
-                  style={{
-                    fontSize: 15,
-                    color: 'var(--fg-muted)',
-                    fontWeight: 400,
-                    lineHeight: 1.5,
-                  }}
-                >
+                <p style={{ fontSize: 15, fontWeight: 400, lineHeight: 1.5 }}>
                   {skill.desc}
                 </p>
               </div>
@@ -91,48 +69,6 @@ export function Skills() {
           ))}
         </div>
       </div>
-
-      <style>{`
-        .skill-card {
-          background: var(--card-bg);
-          border: 1px solid var(--card-border);
-          border-radius: 20px;
-          padding: 32px;
-          transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-          cursor: default;
-          position: relative;
-          overflow: hidden;
-        }
-        .skill-card:hover {
-          background: var(--card-hover);
-          transform: translateY(-6px);
-        }
-        .skill-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 1px;
-          background: linear-gradient(90deg, transparent, var(--fg-muted), transparent);
-          opacity: 0;
-          transition: opacity 0.5s ease;
-        }
-        .skill-card:hover::before {
-          opacity: 1;
-        }
-        .skill-card h3 {
-          color: var(--fg);
-        }
-        .skill-card p {
-          color: var(--fg-muted);
-        }
-        @media (max-width: 768px) {
-          .skills-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }

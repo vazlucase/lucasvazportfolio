@@ -52,16 +52,28 @@ export function Contact() {
         </RevealText>
 
         <RevealText delay={0.3}>
-          <a href="mailto:vaz.lucas.dev@gmail.com" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginRight: 12 }}>
-            Enviar E-mail <span style={{ fontSize: 20 }}>→</span>
-          </a>
-          <a href="https://wa.me/5591991369379?text=Ol%C3%A1!%20Encontrei%20seu%20site%20e%20gostaria%20de%20conversar%20sobre%20um%20poss%C3%ADvel%20projeto.%20Podemos%20falar%20melhor%3F" className="btn-secondary" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 24, marginLeft: 12}}>
-            Enviar Mensagem <span style={{ fontSize: 20 }}>→</span>
-          </a>
+          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <a
+              href="mailto:vaz.lucas.dev@gmail.com"
+              className="btn-primary"
+              aria-label="Enviar e-mail para Lucas Vaz"
+            >
+              Enviar E-mail <span aria-hidden="true" style={{ fontSize: 20 }}>→</span>
+            </a>
+            <a
+              href="https://wa.me/5591991369379?text=Ol%C3%A1!%20Encontrei%20seu%20site%20e%20gostaria%20de%20conversar%20sobre%20um%20poss%C3%ADvel%20projeto.%20Podemos%20falar%20melhor%3F"
+              className="btn-secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Enviar mensagem no WhatsApp"
+            >
+              Enviar Mensagem <span aria-hidden="true" style={{ fontSize: 20 }}>→</span>
+            </a>
+          </div>
         </RevealText>
 
         <RevealText delay={0.4}>
-          <div style={{ display: 'flex', gap: 32, justifyContent: 'center', marginTop: 48 }}>
+          <nav aria-label="Links sociais" style={{ display: 'flex', gap: 32, justifyContent: 'center', marginTop: 48 }}>
             {socialLinks.map((social) => (
               <a
                 key={social.name}
@@ -69,17 +81,13 @@ export function Contact() {
                 className="nav-link"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{
-                  fontSize: 12,
-                  textDecoration: 'none',
-                  color: 'var(--fg)',
-                  position: 'relative',
-                }}
+                style={{ fontSize: 12 }}
+                aria-label={`Perfil no ${social.name}`}
               >
                 {social.name}
               </a>
             ))}
-          </div>
+          </nav>
         </RevealText>
       </div>
     </section>

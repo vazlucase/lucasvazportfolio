@@ -1,5 +1,5 @@
 :root {
-  /* Primitivos - neutros */
+  /* ─── Primitivos ─── */
   --gray-50: #fafafa;
   --gray-100: #f5f5f5;
   --gray-200: #e5e5e5;
@@ -12,22 +12,11 @@
   --gray-900: #171717;
   --gray-950: #0a0a0a;
 
-  /* Semânticos (dark mode base) */
-  --bg: #0c0c10;
-  --bg-card: rgba(255, 255, 255, 0.04);
-  --bg-card-hover: rgba(255, 255, 255, 0.08);
-  --border-default: rgba(255, 255, 255, 0.1);
-  --border-subtle: rgba(255, 255, 255, 0.05);
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.6);
-  --text-muted: rgba(255, 255, 255, 0.4);
-  --accent: #e0e0e8;
-
-  /* Tipografia */
+  /* ─── Tipografia ─── */
   --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
   --font-mono: 'Space Mono', 'SF Mono', monospace;
 
-  /* Espaçamento */
+  /* ─── Espaçamento (4px grid) ─── */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -42,34 +31,26 @@
   --space-24: 96px;
   --space-32: 128px;
 
-  /* Raio de borda */
+  /* ─── Border Radius ─── */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
+  --radius-2xl: 24px;
   --radius-full: 9999px;
 
-  /* Sombras */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  /* ─── Sombras ─── */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
 
-  /* Transições */
-  --transition-fast: 0.2s ease;
-  --transition-base: 0.3s ease;
-  --transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #ffffff;
-    --bg-card: rgba(0, 0, 0, 0.02);
-    --bg-card-hover: rgba(0, 0, 0, 0.04);
-    --border-default: rgba(0, 0, 0, 0.1);
-    --border-subtle: rgba(0, 0, 0, 0.05);
-    --text-primary: #111111;
-    --text-secondary: rgba(0, 0, 0, 0.6);
-    --text-muted: rgba(0, 0, 0, 0.4);
-    --accent: #2c2c3c;
-  }
+  /* ─── Transições ─── */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s var(--ease-out-expo);
+  --transition-slow: 0.5s var(--ease-out-expo);
+  --transition-theme: 0.4s var(--ease-spring);
 }

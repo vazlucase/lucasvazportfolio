@@ -11,15 +11,15 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-const variantStyles = {
+const variantStyles: Record<string, React.CSSProperties> = {
   primary: {
-    background: 'var(--button-primary-bg, var(--fg))',
-    color: 'var(--button-primary-color, var(--bg))',
+    background: 'var(--fg)',
+    color: 'var(--bg)',
     border: 'none',
   },
   secondary: {
-    background: 'var(--button-secondary-bg, transparent)',
-    color: 'var(--button-secondary-color, var(--fg))',
+    background: 'transparent',
+    color: 'var(--fg)',
     border: '1px solid var(--card-border)',
   },
   ghost: {
@@ -34,7 +34,7 @@ const variantStyles = {
   },
 };
 
-const sizeStyles = {
+const sizeStyles: Record<string, { padding: string; fontSize: string; gap: string }> = {
   sm: { padding: '6px 16px', fontSize: '12px', gap: '6px' },
   md: { padding: '10px 24px', fontSize: '14px', gap: '8px' },
   lg: { padding: '14px 32px', fontSize: '16px', gap: '10px' },
@@ -50,7 +50,7 @@ export function Button({
   className = '',
   disabled = false,
 }: ButtonProps) {
-  const styles = {
+  const styles: React.CSSProperties = {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -59,11 +59,12 @@ export function Button({
     fontSize: sizeStyles[size].fontSize,
     fontWeight: 500,
     letterSpacing: '0.5px',
-    borderRadius: '100px',
-    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+    borderRadius: 'var(--radius-full)',
+    transition: 'all 0.3s var(--ease-out-expo)',
     cursor: disabled ? 'not-allowed' : 'pointer',
     opacity: disabled ? 0.5 : 1,
     textDecoration: 'none',
+    fontFamily: 'inherit',
     ...variantStyles[variant],
   };
 
@@ -91,6 +92,7 @@ export function Button({
 
   return (
     <button
+      type="button"
       onClick={(e) => {
         e.stopPropagation();
         if (!disabled && onClick) onClick();

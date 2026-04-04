@@ -21,46 +21,42 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
         return;
       }
 
-      // Focus trap — mantém o foco dentro do modal com Tab/Shift+Tab
+      /* Focus trap — mantém o foco dentro do modal */
       if (e.key === 'Tab' && modalRef.current) {
         const focusable = modalRef.current.querySelectorAll<HTMLElement>(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
         );
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
 
         if (e.shiftKey) {
-          if (document.activeElement === first) { e.preventDefault(); last?.focus(); }
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last?.focus();
+          }
         } else {
-          if (document.activeElement === last)  { e.preventDefault(); first?.focus(); }
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first?.focus();
+          }
         }
-      }
-    };
-
-    const handleClickOutside = (e: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(e.target as Node) && isOpen) {
-        onClose();
       }
     };
 
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown);
-      document.addEventListener('mousedown', handleClickOutside);
       document.body.style.overflow = 'hidden';
-      // Move o foco para o modal ao abrir
       setTimeout(() => modalRef.current?.focus(), 50);
     }
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('mousedown', handleClickOutside);
       document.body.style.overflow = '';
     };
   }, [isOpen, onClose]);
 
   return createPortal(
     <>
-      {/* Cada motion.div é filho DIRETO do AnimatePresence para o exit funcionar */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -110,12 +106,12 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
               ref={modalRef}
               role="dialog"
               aria-modal="true"
-              aria-label={title}
+              aria-label={title || 'Detalhes do projeto'}
               tabIndex={-1}
               style={{
                 width: '100%',
-                maxWidth: 'min(70vw)',
-                maxHeight: 'min(85vh)',
+                maxWidth: 'min(70vw, 600px)',
+                maxHeight: '85vh',
                 pointerEvents: 'auto',
                 position: 'relative',
                 outline: 'none',
@@ -134,9 +130,12 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
               >
                 {/* Linha decorativa no topo */}
                 <div
+                  aria-hidden="true"
                   style={{
                     position: 'absolute',
-                    top: 0, left: 0, right: 0,
+                    top: 0,
+                    left: 0,
+                    right: 0,
                     height: '2px',
                     background: 'linear-gradient(90deg, transparent, var(--fg-muted), transparent)',
                     opacity: 0.3,
@@ -175,14 +174,15 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
                     whileHover={{ scale: 1.05, rotate: 90 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={onClose}
-                    aria-label="Fechar"
+                    aria-label="Fechar modal"
                     type="button"
                     style={{
                       background: 'rgba(var(--fg-rgb), 0.08)',
                       border: '1px solid rgba(var(--fg-rgb), 0.1)',
                       borderRadius: '12px',
-                      width: '32px',
-                      height: '32px',
+                      width: '36px',
+                      height: '36px',
+                      minWidth: '36px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -207,14 +207,14 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
 
                 {/* Content */}
                 <div
+                  className="modal-content-scroll"
                   style={{
                     padding: '20px 24px 24px 24px',
-                    maxHeight: 'calc(min(85vh, 700px) - 80px)',
+                    maxHeight: 'calc(85vh - 80px)',
                     overflowY: 'auto',
                     scrollbarWidth: 'thin',
                     scrollbarColor: 'var(--fg-muted) var(--card-bg)',
                   }}
-                  className="modal-content-scroll"
                 >
                   {children}
                 </div>
@@ -223,25 +223,7 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
           </motion.div>
         )}
       </AnimatePresence>
-
-      <style>{`
-        .modal-content-scroll::-webkit-scrollbar { width: 4px; }
-        .modal-content-scroll::-webkit-scrollbar-track {
-          background: rgba(var(--fg-rgb), 0.05);
-          border-radius: 10px;
-        }
-        .modal-content-scroll::-webkit-scrollbar-thumb {
-          background: rgba(var(--fg-rgb), 0.2);
-          border-radius: 10px;
-        }
-        .modal-content-scroll::-webkit-scrollbar-thumb:hover {
-          background: rgba(var(--fg-rgb), 0.3);
-        }
-        @media (max-width: 640px) {
-          .modal-content-scroll { padding: 16px 20px 20px 20px !important; }
-        }
-      `}</style>
     </>,
-    document.body
+    document.body,
   );
 }

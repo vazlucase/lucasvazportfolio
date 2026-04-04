@@ -18,7 +18,7 @@ export function RevealText({ children, delay = 0, className = '', style = {} }: 
         ...style,
         transform: isVisible ? 'translateY(0)' : 'translateY(60px)',
         opacity: isVisible ? 1 : 0,
-        transition: `transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s, opacity 0.9s ease ${delay}s`,
+        transition: `transform 0.9s var(--ease-out-expo) ${delay}s, opacity 0.9s ease ${delay}s`,
       }}
     >
       {children}
