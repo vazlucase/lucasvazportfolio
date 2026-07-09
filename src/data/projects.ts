@@ -44,5 +44,27 @@ export const projectsData: Project[] = [
     ],
     role: 'Desenvolvedor e Designer',
     duration: '2 semanas',
+  },
+  {
+    title: 'Site Institucional do Rusty Na Ilha',
+    desc: 'Site institucional para o bar Rusty Na Ilha.',
+    fullDescription: 'Um site moderno e funcional que apresenta o Restaurante Rusty Na Ilha, com informações sobre o local, cardápio e eventos. O projeto foca em performance, acessibilidade e uma experiência de usuário imersiva, com transições suaves e tema escuro/claro.',
+    tag: 'Web Design | Institucional',
+    year: '2026',
+    image: '/rustynailha.webp',
+    url: 'https://rustynailha.vercel.app/',
+    github: 'https://github.com/vazlucase',
+    techs: ['React', 'TypeScript', 'Vite', 'CSS Modules', 'Framer Motion'],
+    featured: true,
+    challenge: 'Criar um site institucional que não apenas mostrasse as informações do Restaurante Rusty Na Ilha, mas também demonstrasse minhas habilidades técnicas através da própria construção do site.',
+    solution: '',
+    results: [
+      'Lighthouse score 100% em performance',
+      'SEO otimizado com meta tags e Open Graph',
+      'Design responsivo para todos os dispositivos',
+      'Tema escuro/claro com transição suave'
+    ],
+    role: 'Desenvolvedor web e Designer',
+    duration: '2 semanas',
   }
 ];
