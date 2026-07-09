@@ -74,7 +74,6 @@ export function Footer() {
               opacity: 0.6,
             }}
           >
-            Feito com propósito
           </div>
         </div>
 
@@ -100,7 +99,6 @@ export function Footer() {
               opacity: 0.6,
             }}
           >
-            Direitos reservados
           </div>
         </div>
       </div>

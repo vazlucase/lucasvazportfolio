@@ -263,43 +263,6 @@ export function Hero({ mounted }: HeroProps) {
           </a>
         </div>
       </div>
-
-      {/* Scroll indicator */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          bottom: 40,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 12,
-          opacity: mounted ? 0.4 : 0,
-          transition: 'opacity 1.5s ease 1.5s',
-        }}
-      >
-        <span
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: 10,
-            letterSpacing: 3,
-            textTransform: 'uppercase',
-          }}
-        >
-          scroll
-        </span>
-        <div
-          style={{
-            width: 1,
-            height: 40,
-            background: 'var(--fg)',
-            opacity: 0.3,
-            animation: 'float-slow 3s ease-in-out infinite',
-          }}
-        />
-      </div>
     </section>
   );
 }
