@@ -8,7 +8,7 @@ export const projectsData: Project[] = [
     tag: 'Web Design | Website',
     year: '2026',
     image: '/rustypub.webp',
-    url: 'rustypub.com.br',
+    url: 'https://rustypub.com.br/',
     github: 'https://github.com/vazlucase/rustypub',
     techs: ['React', 'TypeScript', 'Tailwind', 'Framer Motion', 'EmailJS'],
     featured: true,
