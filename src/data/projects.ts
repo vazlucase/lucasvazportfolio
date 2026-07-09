@@ -66,5 +66,27 @@ export const projectsData: Project[] = [
     ],
     role: 'Desenvolvedor web e Designer',
     duration: '2 semanas',
+  },
+  {
+    title: 'Site Para a KingsAviação',
+    desc: 'Site institucional para a KingsAviação.',
+    fullDescription: 'Um site moderno e funcional que apresenta a KingsAviação, com informações sobre a empresa, serviços e voos. O projeto foca em performance, acessibilidade e uma experiência de usuário imersiva, com transições suaves e tema escuro/claro.',
+    tag: 'Web Design | Institucional',
+    year: '2026',
+    image: '/kingsaviacao.webp',
+    url: 'https://kingsaviacao.vercel.app/',
+    github: 'https://github.com/vazlucase',
+    techs: ['React', 'TypeScript', 'Vite', 'CSS Modules', 'Framer Motion'],
+    featured: true,
+    challenge: 'Criar um site institucional que não apenas mostrasse as informações da KingsAviação, mas também demonstrasse minhas habilidades técnicas através da própria construção do site.',
+    solution: '',
+    results: [
+      'Lighthouse score 100% em performance',
+      'SEO otimizado com meta tags e Open Graph',
+      'Design responsivo para todos os dispositivos',
+      'Tema escuro/claro com transição suave'
+    ],
+    role: 'Desenvolvedor web e Designer',
+    duration: '2 semanas',
   }
 ];
