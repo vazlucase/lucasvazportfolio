@@ -7,7 +7,7 @@ export const projectsData: Project[] = [
     fullDescription: 'Site com menu incial e informações relevantes sobre o Rusty Pub em belém',
     tag: 'Web Design | Website',
     year: '2026',
-    image: '/rustypub.com',
+    image: '/rustypub.webp',
     url: 'rustypub.com.br',
     github: 'https://github.com/vazlucase/rustypub',
     techs: ['React', 'TypeScript', 'Tailwind', 'Framer Motion', 'EmailJS'],
@@ -47,7 +47,7 @@ export const projectsData: Project[] = [
   },
   {
     title: 'Site Institucional do Rusty Na Ilha',
-    desc: 'Site institucional para o bar Rusty Na Ilha.',
+    desc: 'Site institucional para o Rusty Na Ilha.',
     fullDescription: 'Um site moderno e funcional que apresenta o Restaurante Rusty Na Ilha, com informações sobre o local, cardápio e eventos. O projeto foca em performance, acessibilidade e uma experiência de usuário imersiva, com transições suaves e tema escuro/claro.',
     tag: 'Web Design | Institucional',
     year: '2026',
