@@ -36,3 +36,10 @@ coverage/
 *.pem
 *.key
 secrets/
+.analytics-data/
+.vercel/
+.figma/
+.openai/
+.codex/
+*.tsbuildinfo
+*.map

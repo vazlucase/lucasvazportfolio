@@ -3,11 +3,24 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
+  "overrides": {
+    "minimatch": "^11.0.1"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && node scripts/check-security.mjs",
+    "setup:admin": "node scripts/setup-admin.mjs",
+    "setup:production": "node scripts/setup-admin.mjs --production",
+    "check:security": "node scripts/check-security.mjs",
+    "test:pet": "node --experimental-strip-types --test tests/pet*.test.mjs",
+    "test:analytics": "node --test tests/analytics*.test.mjs",
+    "check:server": "tsc --noEmit -p tsconfig.node.json --composite false --allowImportingTsExtensions",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "preview": "vite preview",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint src server api scripts tests vite.config.ts --max-warnings 0",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\""
   },
   "dependencies": {
@@ -16,16 +29,19 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.20.5",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@typescript-eslint/eslint-plugin": "^8.24.0",
     "@typescript-eslint/parser": "^8.24.0",
     "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.20.1",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-react-refresh": "^0.4.18",
+    "eslint": "^10.14.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.14.0",
     "prettier": "^3.4.2",
     "typescript": "^5.7.3",
-    "vite": "^6.1.1"
+    "vite": "^6.4.5"
   }
 }

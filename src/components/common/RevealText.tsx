@@ -1,27 +1,24 @@
-import { useInView } from '../../hooks/useInView';
+import type { ReactNode } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 
 interface RevealTextProps {
-  children: React.ReactNode;
+  children: ReactNode;
   delay?: number;
   className?: string;
-  style?: React.CSSProperties;
 }
 
-export function RevealText({ children, delay = 0, className = '', style = {} }: RevealTextProps) {
-  const [ref, isVisible] = useInView({ threshold: 0.1 });
+export function RevealText({ children, delay = 0, className }: RevealTextProps) {
+  const reduced = useReducedMotion();
 
   return (
-    <div
-      ref={ref as React.Ref<HTMLDivElement>}
+    <motion.div
       className={className}
-      style={{
-        ...style,
-        transform: isVisible ? 'translateY(0)' : 'translateY(60px)',
-        opacity: isVisible ? 1 : 0,
-        transition: `transform 0.9s var(--ease-out-expo) ${delay}s, opacity 0.9s ease ${delay}s`,
-      }}
+      initial={reduced ? false : { opacity: 0, y: 56 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.12 }}
+      transition={{ duration: reduced ? 0 : 0.9, delay: reduced ? 0 : delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }

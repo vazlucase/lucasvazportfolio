@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /painel
+Disallow: /admin
+Disallow: /api/
 
-Sitemap: https://lucasvaz.dev/sitemap.xml
+Sitemap: https://lucasvazportfolio.vercel.app/sitemap.xml

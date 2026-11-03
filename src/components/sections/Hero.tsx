@@ -1,267 +1,109 @@
-import { useState, useEffect, useRef } from 'react';
-import { KineticText } from '../common/KineticText';
+import { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { Button } from '../ui/Button';
+import { Icon, StarMark } from '../ui/Icon';
+import { Heading, Text, TextLink } from '../ui/Typography';
 
 interface HeroProps {
-  mounted: boolean;
+  ready: boolean;
 }
 
-type Seg = { text: string; bold?: boolean };
-
-const PHRASES: Seg[][] = [
-  [
-    { text: 'Criando experiências digitais na interseção entre ' },
-    { text: 'código', bold: true },
-    { text: ' e ' },
-    { text: 'design', bold: true },
-    { text: '.' },
-  ],
-  [
-    { text: 'Transformando ' },
-    { text: 'ideias complexas', bold: true },
-    { text: ' em interfaces ' },
-    { text: 'simples e elegantes', bold: true },
-    { text: '.' },
-  ],
-  [
-    { text: 'Desenvolvendo ' },
-    { text: 'produtos', bold: true },
-    { text: ' que as pessoas ' },
-    { text: 'amam usar', bold: true },
-    { text: '.' },
-  ],
-  [
-    { text: 'Unindo ' },
-    { text: 'performance técnica', bold: true },
-    { text: ' com ' },
-    { text: 'estética que encanta', bold: true },
-    { text: '.' },
-  ],
-  [
-    { text: 'Do ' },
-    { text: 'conceito ao deploy', bold: true },
-    { text: ', com atenção a cada ' },
-    { text: 'detalhe', bold: true },
-    { text: '.' },
-  ],
-];
-
-function toPlain(phrase: Seg[]) {
-  return phrase.map((s) => s.text).join('');
-}
-
-function renderSegments(phrase: Seg[], charCount: number) {
-  const nodes: React.ReactNode[] = [];
-  let remaining = charCount;
-
-  for (let i = 0; i < phrase.length; i++) {
-    if (remaining <= 0) break;
-    const seg = phrase[i];
-    const visible = seg.text.slice(0, remaining);
-    remaining -= seg.text.length;
-
-    nodes.push(
-      seg.bold ? (
-        <strong key={i} style={{ color: 'var(--fg)', fontWeight: 500 }}>
-          {visible}
-        </strong>
-      ) : (
-        <span key={i}>{visible}</span>
-      ),
-    );
-  }
-
-  return nodes;
-}
-
-function useTypewriter(phrases: Seg[][], mounted: boolean) {
-  const [charCount, setCharCount] = useState(0);
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
-
-  useEffect(() => {
-    if (!mounted) return;
-
-    const fullText = toPlain(phrases[phraseIndex]);
-    const isComplete = charCount === fullText.length;
-    const isEmpty = charCount === 0;
-
-    const typingSpeed = 38;
-    const deletingSpeed = 22;
-    const pauseAfterType = 2200;
-    const pauseAfterDelete = 400;
-
-    if (!isDeleting && isComplete) {
-      timeoutRef.current = setTimeout(() => setIsDeleting(true), pauseAfterType);
-    } else if (isDeleting && isEmpty) {
-      setIsDeleting(false);
-      setPhraseIndex((i) => (i + 1) % phrases.length);
-      timeoutRef.current = setTimeout(() => {}, pauseAfterDelete);
-    } else if (isDeleting) {
-      timeoutRef.current = setTimeout(() => setCharCount((c) => c - 1), deletingSpeed);
-    } else {
-      timeoutRef.current = setTimeout(() => setCharCount((c) => c + 1), typingSpeed);
-    }
-
-    return () => clearTimeout(timeoutRef.current);
-  }, [charCount, isDeleting, phraseIndex, phrases, mounted]);
-
-  return { nodes: renderSegments(phrases[phraseIndex], charCount) };
-}
-
-function TypewriterText({ mounted }: { mounted: boolean }) {
-  const { nodes } = useTypewriter(PHRASES, mounted);
+export function Hero({ ready }: HeroProps) {
+  const ref = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end start'],
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
+  const markRotate = useTransform(scrollYProgress, [0, 1], [0, 110]);
 
   return (
-    <div
-      style={{
-        height: '4em',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: '0 auto 48px',
-        maxWidth: 500,
-        overflow: 'hidden',
-        opacity: mounted ? 1 : 0,
-        transform: mounted ? 'translateY(0)' : 'translateY(30px)',
-        transition: 'opacity 1s ease .8s, transform 1s ease .8s',
-      }}
-    >
-      <p
-        className="hero-sub"
-        style={{
-          fontSize: 'clamp(16px,2.5vw,22px)',
-          fontWeight: 300,
-          color: 'var(--fg-muted)',
-          lineHeight: 1.6,
-          textAlign: 'center',
-          margin: 0,
-        }}
+    <section id="top" ref={ref} className="hero" aria-label="Lucas Costa Vaz — Desenvolvedor e Designer">
+      <motion.div
+        className="hero-image-wrap"
+        style={{ y: reduced ? 0 : imageY }}
+        initial={{ scale: reduced ? 1 : 1.14 }}
+        animate={{ scale: ready ? 1 : 1.14 }}
+        transition={{ duration: reduced ? 0 : 2.2, ease: [0.16, 1, 0.3, 1] }}
+        aria-hidden="true"
       >
-        {nodes}
-        <span
-          aria-hidden="true"
-          style={{
-            display: 'inline-block',
-            width: '2px',
-            height: '1em',
-            background: 'var(--fg)',
-            marginLeft: '2px',
-            verticalAlign: 'middle',
-            animation: 'cursor-blink 0.8s ease-in-out infinite',
-            opacity: mounted ? 1 : 0,
-          }}
+        <img
+          className="hero-image"
+          src="/ocean-hero.webp"
+          alt=""
+          width="1920"
+          height="1280"
+          fetchPriority="high"
         />
-      </p>
-    </div>
-  );
-}
-
-export function Hero({ mounted }: HeroProps) {
-  return (
-    <section
-      id="top"
-      aria-label="Apresentação"
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'relative',
-        zIndex: 2,
-        padding: '120px 24px 80px',
-      }}
-    >
-      {/* Elementos decorativos */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          top: '15%',
-          left: '8%',
-          width: 200,
-          height: 200,
-          border: '1px solid var(--fg-subtle)',
-          borderRadius: '50%',
-          animation: 'float-slow 8s ease-in-out infinite',
-          opacity: mounted ? 0.4 : 0,
-          transition: 'opacity 2s ease, border-color .8s ease',
-        }}
-      />
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          bottom: '20%',
-          right: '10%',
-          width: 120,
-          height: 120,
-          border: '1px solid var(--fg-subtle)',
-          transform: 'rotate(45deg)',
-          animation: 'float-slow 6s ease-in-out infinite 1s',
-          opacity: mounted ? 0.3 : 0,
-          transition: 'opacity 2s ease .5s, border-color .8s ease',
-        }}
-      />
-
-      {/* Grid de fundo */}
-      <div className="bg-grid" aria-hidden="true" />
-
-      <div style={{ textAlign: 'center', maxWidth: 1000 }}>
-        <div
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: 12,
-            letterSpacing: 6,
-            textTransform: 'uppercase',
-            color: 'var(--fg-muted)',
-            marginBottom: 40,
-            opacity: mounted ? 1 : 0,
-            transform: mounted ? 'translateY(0)' : 'translateY(20px)',
-            transition: 'all 1s ease .2s',
-          }}
+      </motion.div>
+      <div className="hero-shade" aria-hidden="true" />
+      <div className="hero-content page-width">
+        <motion.div
+          className="hero-eyebrow mono"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: ready ? 1 : 0 }}
+          transition={{ delay: reduced ? 0 : 0.45, duration: 0.6 }}
         >
-          Desenvolvedor & Designer — Brasil
+          <span><span className="availability-dot" /> DISPONÍVEL PARA NOVOS PROJETOS</span>
+          <span className="hero-edition">PORTFÓLIO — VOL. 2026</span>
+        </motion.div>
+        <div className="hero-title-wrap">
+          <Heading as="h1" className="hero-title" aria-label="Ideias fora do óbvio.">
+            {['IDEIAS FORA', 'DO ÓBVIO.'].map((line, index) => (
+              <span className="hero-line-mask" key={line} aria-hidden="true">
+                <motion.span
+                  className="hero-title-line"
+                  initial={{ y: reduced ? 0 : '110%', rotate: reduced ? 0 : 4 }}
+                  animate={{ y: ready ? '0%' : '110%', rotate: ready ? 0 : 4 }}
+                  transition={{
+                    duration: reduced ? 0 : 1.05,
+                    delay: reduced ? 0 : 0.4 + index * 0.13,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                >
+                  {line}
+                </motion.span>
+              </span>
+            ))}
+          </Heading>
+          <motion.div
+            className="hero-star"
+            style={{ rotate: reduced ? 0 : markRotate }}
+            initial={{ opacity: 0, scale: 0.4 }}
+            animate={{ opacity: ready ? 1 : 0, scale: ready ? 1 : 0.4 }}
+            transition={{ duration: reduced ? 0 : 0.9, delay: reduced ? 0 : 0.8 }}
+          >
+            <StarMark />
+          </motion.div>
         </div>
-
-        <h1
-          className="hero-title"
-          style={{
-            fontSize: 'clamp(48px,10vw,120px)',
-            fontWeight: 800,
-            lineHeight: 0.95,
-            letterSpacing: '-0.04em',
-            marginBottom: 32,
-          }}
+        <motion.div
+          className="hero-bottom"
+          initial={{ opacity: 0, y: reduced ? 0 : 30 }}
+          animate={{ opacity: ready ? 1 : 0, y: ready ? 0 : 30 }}
+          transition={{ duration: reduced ? 0 : 0.85, delay: reduced ? 0 : 0.9 }}
         >
-          <KineticText text="Lucas" />
-          <br />
-          <span className="italic-highlight">
-            <KineticText text="Costa Vaz" />
-          </span>
-        </h1>
-
-        <TypewriterText mounted={mounted} />
-
-        <div
-          style={{
-            display: 'flex',
-            gap: 16,
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            opacity: mounted ? 1 : 0,
-            transform: mounted ? 'translateY(0)' : 'translateY(30px)',
-            transition: 'all 1s ease 1s',
-          }}
+          <div className="hero-introduction">
+            <Text className="hero-name mono">LUCAS COSTA VAZ</Text>
+            <Text className="hero-description">
+              Transformo ideias em experiências digitais.<br />
+              Código preciso. Design que fica.
+            </Text>
+          </div>
+          <Button href="#projetos" className="hero-explore" variant="unstyled">
+            <span>Conheça<br />meu trabalho</span>
+            <span className="hero-explore-circle"><Icon name="down" /></span>
+          </Button>
+        </motion.div>
+        <motion.div
+          className="hero-baseline mono"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: ready ? 1 : 0 }}
+          transition={{ delay: reduced ? 0 : 1.15, duration: 0.7 }}
         >
-          <a href="#projetos" className="btn-primary">
-            Ver Projetos
-          </a>
-          <a href="#contato" className="btn-secondary">
-            Entrar em Contato
-          </a>
-        </div>
+          <span>DO BRASIL, PARA NOVAS POSSIBILIDADES.</span>
+          <TextLink href="#projetos">CONTINUE EXPLORANDO <Icon name="down" /></TextLink>
+        </motion.div>
       </div>
     </section>
   );

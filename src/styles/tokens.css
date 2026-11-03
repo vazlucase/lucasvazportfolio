@@ -1,56 +1,86 @@
 :root {
-  /* ─── Primitivos ─── */
-  --gray-50: #fafafa;
-  --gray-100: #f5f5f5;
-  --gray-200: #e5e5e5;
-  --gray-300: #d4d4d4;
-  --gray-400: #a3a3a3;
-  --gray-500: #737373;
-  --gray-600: #525252;
-  --gray-700: #404040;
-  --gray-800: #262626;
-  --gray-900: #171717;
-  --gray-950: #0a0a0a;
+  --ink: #181916;
+  --ink-deep: #10110f;
+  --paper: #eeeee6;
+  --white: #fafbf3;
+  --lime: #e0ff82;
+  --lilac: #c3aff0;
+  --stone: #d7d6cb;
+  --muted-ink: #616357;
+  --muted-light: #b4b7a9;
+  --ink-line: rgb(24 25 22 / 20%);
+  --light-line: rgb(238 238 230 / 24%);
+  --overlay: rgb(10 11 9 / 74%);
+  --surface: var(--paper);
+  --surface-text: var(--ink);
+  --surface-muted: var(--muted-ink);
+  --surface-line: var(--ink-line);
+  --preview-pub: #b4b09d;
+  --preview-portfolio: #c9c7bd;
+  --preview-island: #d7dfcc;
+  --preview-aviation: #c3cede;
 
-  /* ─── Tipografia ─── */
+  --font-display: 'Anton', 'Impact', sans-serif;
   --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
-  --font-mono: 'Space Mono', 'SF Mono', monospace;
+  --font-mono: 'Space Mono', monospace;
+  --text-xs: 0.625rem;
+  --text-sm: 0.75rem;
+  --text-base: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: clamp(1.125rem, 1.75vw, 1.625rem);
+  --text-xl: clamp(1.5rem, 3vw, 2.5rem);
+  --title-section: clamp(3.5rem, 8.3vw, 8rem);
+  --title-hero: clamp(4.75rem, 14.3vw, 15rem);
+  --tracking-mono: 0.045em;
 
-  /* ─── Espaçamento (4px grid) ─── */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
-  --space-20: 80px;
-  --space-24: 96px;
-  --space-32: 128px;
-
-  /* ─── Border Radius ─── */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --radius-2xl: 24px;
-  --radius-full: 9999px;
-
-  /* ─── Sombras ─── */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
-
-  /* ─── Transições ─── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --page-gutter: clamp(1.25rem, 3.5vw, 4rem);
+  --section-space: clamp(5rem, 10vw, 10rem);
+  --page-width: 100rem;
+  --nav-height: 5.75rem;
+  --control-size: 3rem;
+  --radius-full: 999px;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --hairline: 1px;
+  --shadow-screen: 0 2rem 4rem -1rem rgb(0 0 0 / 28%);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-spring: cubic-bezier(0.2, 0.9, 0.4, 1.1);
-  --transition-fast: 0.15s ease;
-  --transition-base: 0.3s var(--ease-out-expo);
-  --transition-slow: 0.5s var(--ease-out-expo);
-  --transition-theme: 0.4s var(--ease-spring);
+  --transition-fast: 180ms ease;
+  --transition-base: 350ms var(--ease-out-expo);
+  --transition-slow: 800ms var(--ease-out-expo);
+
+  /* Compatibility for the existing, reusable theme-aware components. */
+  --bg: var(--surface);
+  --fg: var(--surface-text);
+  --fg-muted: var(--surface-muted);
+  --card-bg: transparent;
+  --card-border: var(--surface-line);
+  --divider: var(--surface-line);
+  --status-glow: var(--lime);
+}
+
+:root[data-theme='dark'] {
+  --surface: #20211e;
+  --surface-text: var(--paper);
+  --surface-muted: var(--muted-light);
+  --surface-line: var(--light-line);
+}
+
+@media (max-width: 700px) {
+  :root {
+    --nav-height: 4.75rem;
+    --title-hero: clamp(3.5rem, 19.3vw, 8.5rem);
+  }
 }

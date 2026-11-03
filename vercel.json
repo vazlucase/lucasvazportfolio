@@ -1,5 +1,69 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/api/analytics/:action",
+      "destination": "/api/analytics?action=:action"
+    },
+    {
+      "source": "/painel",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/index.html"
+    }
+  ],
+  "functions": {
+    "api/analytics.js": {
+      "maxDuration": 15
+    }
+  },
   "headers": [
+    {
+      "source": "/painel",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "private, no-store, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/admin",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "private, no-store, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/api/analytics(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "private, no-store, max-age=0"
+        }
+      ]
+    },
     {
       "source": "/(.*)",
       "headers": [
@@ -12,24 +76,20 @@
           "value": "DENY"
         },
         {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
           "key": "Referrer-Policy",
           "value": "strict-origin-when-cross-origin"
         },
         {
           "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
+          "value": "camera=(), microphone=(), geolocation=(), payment=()"
         },
         {
           "key": "Strict-Transport-Security",
-          "value": "max-age=63072000; includeSubDomains; preload"
+          "value": "max-age=63072000; includeSubDomains"
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'"
+          "value": "default-src 'self'; script-src 'self' 'sha256-GlENfAPCAAntndr5AzK5QKmwnrBMqnRxgDQLUjDzUfU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
         }
       ]
     }

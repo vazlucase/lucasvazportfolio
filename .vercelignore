@@ -1,0 +1,14 @@
+.git
+.github
+.figma
+.codex
+.openai
+.env
+.env.*
+secrets
+.analytics-data
+node_modules
+dist
+coverage
+tests
+*.log

@@ -2,6 +2,7 @@ export interface Skill {
   title: string;
   desc: string;
   icon: string;
+  description: string;
 }
 
 export interface Project {

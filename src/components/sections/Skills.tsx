@@ -1,92 +1,77 @@
-import { RevealText } from '../common/RevealText';
+import { useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { skillsData } from '../../data/skills';
+import { RevealText } from '../common/RevealText';
+import { Button } from '../ui/Button';
+import { Icon } from '../ui/Icon';
+import { Heading, Text } from '../ui/Typography';
+import { notifyPet } from '../pet/petMind';
 
 export function Skills() {
+  const [expanded, setExpanded] = useState<number | null>(0);
+  const reduced = useReducedMotion();
+
   return (
-    <>
-      <style>{`
-        /* Esconde a scrollbar no mobile (mantém funcionalidade) */
-        .skills-grid {
-          scrollbar-width: none;  /* Firefox */
-          -ms-overflow-style: none;  /* IE/Edge */
-        }
-        .skills-grid::-webkit-scrollbar {
-          display: none;  /* Chrome/Safari */
-        }
-
-        /* Desktop: transforma o flex em grid, desativa o scroll */
-        @media (min-width: 768px) {
-          .skills-grid {
-            display: grid !important;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
-            gap: 24px !important;
-            overflow-x: visible !important;
-            scroll-snap-type: none !important;
-            padding-bottom: 0 !important;
-          }
-          .skill-card {
-            min-width: auto !important;
-            flex: 1 !important;
-            scroll-snap-align: none !important;
-          }
-        }
-      `}</style>
-
-      <section id="skills" className="section-pad" style={{ position: 'relative', zIndex: 2, padding: '120px 48px' }}>
-        <div className="container" style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <RevealText>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: 5, textTransform: 'uppercase', color: 'var(--fg-muted)', marginBottom: 24 }}>
-              02 — Habilidades
-            </div>
-          </RevealText>
-
-          <RevealText delay={0.1}>
-            <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.03em', marginBottom: 60, maxWidth: 600, color: 'var(--fg)' }}>
-              Ferramentas que transformam <span className="italic-highlight">visão em realidade</span>
-            </h2>
-          </RevealText>
-
-          <div
-            className="skills-grid"
-            style={{
-              display: 'flex',
-              overflowX: 'auto',
-              gap: '16px',
-              scrollSnapType: 'x mandatory',
-              paddingBottom: '8px',
-            }}
-          >
-            {skillsData.map((skill, i) => (
-              <RevealText key={skill.title} delay={0.15 + i * 0.1}>
-                <div
-                  className="skill-card"
-                  style={{
-                    minWidth: 220,
-                    minHeight: 250,
-                    backdropFilter: 'blur(1px)',
-                    background: 'rgba(233, 233, 233, 0.05)',  // mesmo valor original
-                    borderRadius: 12,
-                    padding: 24,
-                    flex: '0 0 280px',
-                    scrollSnapAlign: 'start',
-                    overflow: 'visible', // 👈 IMPEDE CORTE DA BORDA NA ANIMAÇÃO
-                  }}
-                >
-                  <div style={{ fontSize: 48, maxWidth: 48, marginBottom: 20, opacity: 0.7, color: 'var(--fg)' }} aria-hidden="true">
-                    {skill.icon}
-                  </div>
-                  <h3 style={{ fontSize: 24, fontWeight: 600, marginBottom: 12, letterSpacing: '-0.02em' }}>
-                    {skill.title}
-                  </h3>
-                  <p style={{ fontSize: 15, fontWeight: 400, lineHeight: 1.5 }}>
-                    {skill.desc}
-                  </p>
+    <section id="skills" className="skills-section section-space">
+      <div className="page-width">
+        <RevealText>
+          <div className="section-kicker mono">
+            <span>03 / O QUE EU FAÇO</span>
+            <span>DO PRIMEIRO RASCUNHO AO ÚLTIMO PIXEL.</span>
+          </div>
+          <div className="section-heading-row">
+            <Heading className="section-title">VISÃO CRIATIVA.<br />ENTREGA REAL.</Heading>
+            <Text className="section-description">Design e desenvolvimento não são etapas isoladas. São partes da mesma conversa — e eu transito entre elas.</Text>
+          </div>
+        </RevealText>
+        <div className="skills-list">
+          {skillsData.map((skill, index) => {
+            const open = expanded === index;
+            return (
+              <RevealText key={skill.title} delay={index * 0.05}>
+                <div className={`skill-row ${open ? 'is-open' : ''}`}>
+                  <Button
+                    id={`skill-trigger-${index}`}
+                    variant="unstyled"
+                    className="skill-trigger"
+                    onClick={() => {
+                      setExpanded(open ? null : index);
+                      if (!open) notifyPet({ type: 'skill', title: skill.title });
+                    }}
+                    aria-expanded={open}
+                    aria-controls={`skill-panel-${index}`}
+                  >
+                    <span className="skill-number mono">0{index + 1}</span>
+                    <span className="skill-name">{skill.title}</span>
+                    <span className="skill-toggle"><Icon name={open ? 'minus' : 'plus'} /></span>
+                  </Button>
+                  <AnimatePresence initial={false}>
+                    {open && (
+                      <motion.div
+                        id={`skill-panel-${index}`}
+                        role="region"
+                        aria-labelledby={`skill-trigger-${index}`}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: reduced ? 0 : 0.4, ease: [0.16, 1, 0.3, 1] }}
+                        className="skill-panel"
+                      >
+                        <div className="skill-panel-inner">
+                          <Text>{skill.description}</Text>
+                          <div className="tag-list">
+                            {skill.desc.split(' · ').map((tool) => <span className="tag" key={tool}>{tool}</span>)}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </RevealText>
-            ))}
-          </div>
+            );
+          })}
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
